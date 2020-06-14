@@ -1,9 +1,19 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+import LogInScreen from './screens/LogInScreen'
+
+export default function App(){
+  return(
+      <LogInScreen></LogInScreen>
+  )
+};
+
+
+/*
 import Perfil from './screens/Perfil';
 import Expensas from './screens/Expensas';
 import Departamentos from './screens/Departamentos';
@@ -40,3 +50,5 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+*/
