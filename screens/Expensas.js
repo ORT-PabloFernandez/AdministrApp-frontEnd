@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
 import Card from '../components/Card';
-import Header from '../components/Header';
+import MainHeader from '../components/MainHeader';
 
 const Expensas = props => {
     return (
         <View style={styles.expensasTitle}>
-            <Header />
+            <MainHeader />
             <View>
                 <Card style={styles.expensasContainer}>
                     <Text style={styles.expensasText}>Enero 2020</Text>

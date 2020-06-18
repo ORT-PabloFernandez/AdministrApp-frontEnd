@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import Header from '../components/Header';
+import MainHeader from '../components/MainHeader';
 import Card from '../components/Card';
 
 const Perfil = props => {
     return (
         <View>
-            <Header />
+            <MainHeader />
             <Text>hello</Text>
         </View>
     );
