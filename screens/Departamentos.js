@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 
 import Card from '../components/Card';
 
@@ -7,13 +7,16 @@ const Departamentos = props => {
     return (
         <View style={styles.departamentosTitle}>
             <Card style={styles.departamentoContainer}>
-                <Text>Departamento 1</Text>
+                <Text>Planta Baja "A"</Text>
+                <Button title="Detalle" />
             </Card>
             <Card style={styles.departamentoContainer}>
-                <Text>Departamento 2</Text>
+                <Text>Planta Baja "B"</Text>
+                <Button title="Detalle" />
             </Card>
             <Card style={styles.departamentoContainer}>
-                <Text>Departamento 3</Text>
+                <Text>Primer Piso "A"</Text>
+                <Button title="Detalle" />
             </Card>
         </View>
     );
@@ -28,7 +31,7 @@ const styles = StyleSheet.create({
     departamentoContainer: {
         flexDirection: 'row',
         margin: 20,
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
         maxWidth: '80%',
         width: 300,

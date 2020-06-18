@@ -1,14 +1,27 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 
 import Card from '../components/Card';
+import Header from '../components/Header';
 
 const Expensas = props => {
     return (
         <View style={styles.expensasTitle}>
-            <Card style={styles.expensasContainer}>
-                <Text>Expensas!</Text>
-            </Card>
+            <Header />
+            <View>
+                <Card style={styles.expensasContainer}>
+                    <Text style={styles.expensasText}>Enero 2020</Text>
+                    <Button title="Detalle" />
+                </Card>
+                <Card style={styles.expensasContainer}>
+                    <Text style={styles.expensasText}>Febrero 2020</Text>
+                    <Button title="Detalle" />
+                </Card>
+                <Card style={styles.expensasContainer}>
+                    <Text style={styles.expensasText}>Marzo 2020</Text>
+                    <Button title="Detalle" />
+                </Card>
+            </View>
         </View>
     );
 };
@@ -16,18 +29,20 @@ const Expensas = props => {
 const styles = StyleSheet.create({
     expensasTitle: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center'
     },
     expensasContainer: {
         flexDirection: 'row',
         margin: 20,
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
         maxWidth: '80%',
         width: 300,
-        height: 300,
+        height: 100,
         maxHeight: '80%'
+    },
+    expensasText: {
+        fontSize: 18
     }
 });
 
