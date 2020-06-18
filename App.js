@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import LoginScreen from './screens/LoginScreen';
+import LoginScreen from './screens/LogInScreen';
 import StartScreen from './screens/StartScreen';
 import HomeScreen from './screens/HomeScreen';
 
