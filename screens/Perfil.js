@@ -1,19 +1,21 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
+import MainHeader from '../components/MainHeader';
+import Card from '../components/Card';
+
 const Perfil = props => {
     return (
-        <View style={styles.perfilTitle}>
-            <Text>Perfil!</Text>
+        <View>
+            <MainHeader />
+            <Text>hello</Text>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     perfilTitle: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        flex: 1
     }
 });
 
