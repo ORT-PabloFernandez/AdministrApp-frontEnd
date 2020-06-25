@@ -1,30 +1,42 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
-const axios = require('axios'); 
+const axios = require('axios');
 
+let content = axios.get('http://localhost:3000/api/mensaje')
+    .then(function (response) {
+        response.mensajes.forEach(mensaje => {
+            <View>
+                <Text>
+                    {mensaje.descripcion}
+                </Text>
+            </View>
+        });
+    })
+    .catch(function (error) {
+        <View>
+            <Text>
+                Error
+            </Text>
+        </View>
+    })
 
-
-const Avisos = ( props ) => {
+const Avisos = (props) => {
     return (
+        <View style={styles.screen}>
+            <Text>
+                {Object.values(content)}
+            </Text>
+        </View>
+    )
+};
 
-        axios.get('http://localhost:3000/api/mensaje')
-            .then(function (response) {
-                response.mensajes.forEach(mensaje => {
-                    <View>
-                        <Text>
-                            {mensaje.descripcion};
-                        </Text>
-                    </View>
-                });
-            // handle success
-            console.log(response);
-            })
-            .catch(function (error) {
-            // handle error
-            console.log(error);
-            })
-
-)};
+const styles = StyleSheet.create({
+    screen: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+})
 
 export default Avisos;
