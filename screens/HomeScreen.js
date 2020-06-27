@@ -1,5 +1,4 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -27,6 +26,8 @@ const HomeScreen = props => {
               iconName = 'ios-business';
             } else if (route.name === 'Perfil') {
               iconName = 'ios-person';
+            } else if (route.name === 'Avisos') {
+              iconName = 'ios-paper';
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
