@@ -1,30 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 
-const axios = require('axios'); 
+const axios = require('axios');
 
+const Avisos = (props) => {
 
+    const [mensajes, setMensajes] = useState([]);
 
-const Avisos = ( props ) => {
+    axios.get('http://localhost:3000/api/mensaje')
+        .then(function (response) {
+            console.log(JSON.stringify(response));
+            setMensajes(JSON.stringify(response.data.mensajes));
+        })
+        .catch(function (error) {
+            console.log("An error ocurred \n" + error);
+        })
+
     return (
-
-        axios.get('http://localhost:3000/api/mensaje')
-            .then(function (response) {
-                response.mensajes.forEach(mensaje => {
-                    <View>
-                        <Text>
-                            {mensaje.descripcion};
-                        </Text>
-                    </View>
-                });
-            // handle success
-            console.log(response);
-            })
-            .catch(function (error) {
-            // handle error
-            console.log(error);
-            })
-
-)};
+        <View>
+            <Text>
+                {mensajes}
+            </Text>
+        </View>
+    )
+};
 
 export default Avisos;

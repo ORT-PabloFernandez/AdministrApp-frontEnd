@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Perfil from '../screens/Perfil';
 import Expensas from '../screens/Expensas';
 import Departamentos from '../screens/Departamentos';
+import Avisos from '../screens/Avisos';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +21,8 @@ const HomeScreen = props => {
 
             if (route.name === 'Expensas') {
               iconName = 'ios-paper';
+            } else if (route.name === 'Avisos') {
+                iconName = 'ios-business';
             } else if (route.name === 'Departamentos') {
               iconName = 'ios-business';
             } else if (route.name === 'Perfil') {
@@ -34,6 +37,7 @@ const HomeScreen = props => {
         }}
       >
         <Tab.Screen name="Expensas" component={Expensas} />
+        <Tab.Screen name="Avisos" component={Avisos} />
         <Tab.Screen name="Departamentos" component={Departamentos} />
         <Tab.Screen name="Perfil" component={Perfil} />
       </Tab.Navigator>
