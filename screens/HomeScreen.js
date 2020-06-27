@@ -20,6 +20,8 @@ const HomeScreen = props => {
 
             if (route.name === 'Expensas') {
               iconName = 'ios-paper';
+            } else if (route.name === 'Avisos') {
+                iconName = 'ios-business';
             } else if (route.name === 'Departamentos') {
               iconName = 'ios-business';
             } else if (route.name === 'Perfil') {
