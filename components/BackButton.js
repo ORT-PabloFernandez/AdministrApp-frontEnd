@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(BackButton);
+export default BackButton;
