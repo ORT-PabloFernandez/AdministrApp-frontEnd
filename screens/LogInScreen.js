@@ -9,23 +9,41 @@ import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import { emailValidator, passwordValidator } from '../core/utils';
 
-const LoginScreen = ( props ) => {
-  const [email, setEmail] = useState({ value: '', error: '' });
-  const [password, setPassword] = useState({ value: '', error: '' });
+import api from '../constants/api';
+
+const axios = require('axios');
+
+const LoginScreen = (props) => {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const _onLoginPressed = () => {
-    props.homeScreen('HomeScreen');
-  /*  const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
 
-    if (emailError || passwordError) {
-      setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
-      return;
-    }
+    console.log("_onLoginPressed...");
+    var callLogin = {
+      method: 'post',
+      url: `${api.url}/login`,
+      data: {
+        'email': email,
+        'password': password
+      }
+    };
+    console.log("callLogin for " + JSON.stringify(email));
 
-    navigation.navigate('Dashboard');
-  */  
+    axios(callLogin)
+      .then(function(response){
+        console.log("callLogin... \n" + JSON.stringify(response));
+        if (response.status == 200) {
+          props.homeScreen('HomeScreen');
+        } else {
+          alert('Error en login');
+        }
+      })
+      .catch(function(error) {
+
+      })
+
   };
 
   return (
@@ -41,7 +59,7 @@ const LoginScreen = ( props ) => {
         label="Email / Usuario"
         returnKeyType="next"
         value={email.value}
-        onChangeText={text => setEmail({ value: text, error: '' })}
+        onChangeText={text => setEmail(text)}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
@@ -54,7 +72,7 @@ const LoginScreen = ( props ) => {
         label="Contraseña"
         returnKeyType="done"
         value={password.value}
-        onChangeText={text => setPassword({ value: text, error: '' })}
+        onChangeText={text => setPassword(text)}
         error={!!password.error}
         errorText={password.error}
         secureTextEntry

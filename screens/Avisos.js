@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 import Card from '../components/Card';
+import api from '../constants/api';
 
 const axios = require('axios');
 
@@ -11,7 +12,7 @@ const Avisos = (props) => {
 
     var getMensajes = {
         method: 'get',
-        url: 'https://administrapp-application.herokuapp.com/api/mensajes',
+        url: `${api.url}/mensajes`,
         headers: {
             'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1ZWYzZDNlMzdkYjNmMDEyMWUzYjVkMzUiLCJpYXQiOjE1OTMwMzc4MTUsImV4cCI6MTU5NDI0NzQxNX0.RGiIy93Yj12KXLogjvLcW0-ROxXrmOS2iXXEvaGCEEM'
         }
