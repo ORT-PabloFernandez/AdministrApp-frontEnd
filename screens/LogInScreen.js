@@ -7,7 +7,7 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
-import { emailValidator, passwordValidator } from '../core/utils';
+
 
 import api from '../constants/api';
 
@@ -48,7 +48,7 @@ const LoginScreen = (props) => {
 
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('HomeScreen')} />
+      <BackButton goBack={() => props.homeScreen('StartScreen')} />
 
       <Logo />
 
@@ -111,11 +111,11 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   label: {
-    color: theme.colors.secondary,
+    color: '#414757'
   },
   link: {
     fontWeight: 'bold',
-    color: theme.colors.primary,
+    color: '#e61c0e',
   },
 });
 

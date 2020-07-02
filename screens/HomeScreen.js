@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -7,6 +8,7 @@ import Perfil from '../screens/Perfil';
 import Expensas from '../screens/Expensas';
 import Departamentos from '../screens/Departamentos';
 import Avisos from '../screens/Avisos';
+import Background from '../components/Background';
 
 const Tab = createBottomTabNavigator();
 
