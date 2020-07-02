@@ -7,7 +7,7 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
-import { emailValidator, passwordValidator } from '../core/utils';
+
 
 const LoginScreen = ( props ) => {
   const [email, setEmail] = useState({ value: '', error: '' });
@@ -15,22 +15,12 @@ const LoginScreen = ( props ) => {
 
   const _onLoginPressed = () => {
     props.homeScreen('HomeScreen');
-  /*  const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
 
-    if (emailError || passwordError) {
-      setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
-      return;
-    }
-
-    navigation.navigate('Dashboard');
-  */  
   };
 
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('HomeScreen')} />
+      <BackButton goBack={() => props.homeScreen('StartScreen')} />
 
       <Logo />
 
@@ -93,11 +83,11 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   label: {
-    color: theme.colors.secondary,
+    color: '#414757'
   },
   link: {
     fontWeight: 'bold',
-    color: theme.colors.primary,
+    color: '#e61c0e',
   },
 });
 
