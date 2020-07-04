@@ -1,41 +1,21 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import * as React from 'react';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import Index from './Index';
 
-import LoginScreen from './screens/LogInScreen';
-import StartScreen from './screens/StartScreen';
-import HomeScreen from './screens/HomeScreen';
-
-export default function App() {
-
-  const [screenFlag, setScreenFlag] = useState('');
-
-  const logInHandler = (loginState) => {
-      setScreenFlag(loginState);
-  };
-
-  const HomeScreenHandler = (homeScreenState) => {
-    setScreenFlag(homeScreenState);
+const theme = {
+  ...DefaultTheme,
+  roundness: 10,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#000000',
+    accent: '#f1c40f',
+  },
 };
 
-  let content = <StartScreen onLogIn = {logInHandler} />;
-
-  if (screenFlag === 'LoginScreen'){
-    content = <LoginScreen homeScreen = {HomeScreenHandler}/>;
-    }
-  
-  if (screenFlag === 'HomeScreen'){
-    content = <HomeScreen />;
-  }
-
-  return(
-    <View style={styles.screen}>
-      {content}
-    </View>
-  ) 
-};
-
-const styles=StyleSheet.create({
-  screen: {
-    flex: 1
-  }
-});
+export default function Main() {
+  return (
+    <PaperProvider theme={theme}>
+      <Index />
+    </PaperProvider>
+  );
+}

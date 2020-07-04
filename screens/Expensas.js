@@ -2,12 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
 import Card from '../components/Card';
-import MainHeader from '../components/MainHeader';
+import Colors from '../constants/colors';
 
 const Expensas = props => {
     return (
         <View style={styles.expensasTitle}>
-            <MainHeader />
             <View>
                 <Card style={styles.expensasContainer}>
                     <Text style={styles.expensasText}>Enero 2020</Text>
@@ -28,10 +27,13 @@ const Expensas = props => {
 
 const styles = StyleSheet.create({
     expensasTitle: {
+        backgroundColor: Colors.mainBackground,
         flex: 1,
+        justifyContent: 'center',
         alignItems: 'center'
     },
     expensasContainer: {
+        color: '#000000',
         flexDirection: 'row',
         margin: 20,
         justifyContent: 'space-between',

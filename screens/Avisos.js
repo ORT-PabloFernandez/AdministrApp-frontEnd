@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 import Card from '../components/Card';
-import api from '../constants/api';
+import Colors from '../constants/colors';
+
+import Api from '../constants/api';
+import Session from '../constants/session';
 
 const axios = require('axios');
 
@@ -12,11 +15,13 @@ const Avisos = (props) => {
 
     var getMensajes = {
         method: 'get',
-        url: `${api.url}/mensajes`,
+        url: `${Api.url}/mensajes`,
         headers: {
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1ZWYzZDNlMzdkYjNmMDEyMWUzYjVkMzUiLCJpYXQiOjE1OTMwMzc4MTUsImV4cCI6MTU5NDI0NzQxNX0.RGiIy93Yj12KXLogjvLcW0-ROxXrmOS2iXXEvaGCEEM'
+            'Authorization': `${Session.bearer}${Session.token}`
         }
     };
+
+    console.log("Request is: \n" + JSON.stringify(getMensajes));
 
     axios(getMensajes)
         .then(function (response) {
@@ -50,6 +55,7 @@ const Avisos = (props) => {
 
 const styles = StyleSheet.create({
     screen: {
+        backgroundColor: Colors.mainBackground,
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'

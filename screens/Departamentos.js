@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
 import Card from '../components/Card';
+import Colors from '../constants/colors';
 
 const Departamentos = props => {
     return (
@@ -24,6 +25,7 @@ const Departamentos = props => {
 
 const styles = StyleSheet.create({
     departamentosTitle: {
+        backgroundColor: Colors.mainBackground,
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
