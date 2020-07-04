@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -7,6 +7,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Perfil from '../screens/Perfil';
 import Expensas from '../screens/Expensas';
 import Departamentos from '../screens/Departamentos';
+import Avisos from '../screens/Avisos';
+import Background from '../components/Background';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,10 +22,14 @@ const HomeScreen = props => {
 
             if (route.name === 'Expensas') {
               iconName = 'ios-paper';
+            } else if (route.name === 'Avisos') {
+                iconName = 'ios-business';
             } else if (route.name === 'Departamentos') {
               iconName = 'ios-business';
             } else if (route.name === 'Perfil') {
               iconName = 'ios-person';
+            } else if (route.name === 'Avisos') {
+              iconName = 'ios-paper';
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
@@ -34,6 +40,7 @@ const HomeScreen = props => {
         }}
       >
         <Tab.Screen name="Expensas" component={Expensas} />
+        <Tab.Screen name="Avisos" component={Avisos} />
         <Tab.Screen name="Departamentos" component={Departamentos} />
         <Tab.Screen name="Perfil" component={Perfil} />
       </Tab.Navigator>

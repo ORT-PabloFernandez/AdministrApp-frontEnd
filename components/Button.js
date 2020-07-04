@@ -1,17 +1,13 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Button as PaperButton } from 'react-native-paper';
-import { theme } from '../core/theme';
 
 const Button = ({ mode, style, children, ...props }) => (
   <PaperButton
     style={[
-      styles.button,
-      mode === 'outlined' && { backgroundColor: theme.colors },
-      style,
+      styles.button
     ]}
     labelStyle={styles.text}
-    mode={mode}
     {...props}
   >
     {children}
@@ -22,12 +18,14 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     marginVertical: 10,
+    backgroundColor: '#e61c0e'
   },
   text: {
     fontWeight: 'bold',
     fontSize: 15,
     lineHeight: 26,
+    color: '#ffffff'
   },
 });
 
-export default memo(Button);
+export default Button;

@@ -6,31 +6,57 @@ import Header from '../components/Header';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
-import { theme } from '../core/theme';
-import { emailValidator, passwordValidator } from '../core/utils';
 
-const LoginScreen = ( props ) => {
-  const [email, setEmail] = useState({ value: '', error: '' });
-  const [password, setPassword] = useState({ value: '', error: '' });
+import Api from '../constants/api';
+import Session from '../constants/session';
+
+const axios = require('axios');
+
+const LoginScreen = (props) => {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [hasLoginError, setHasLoginError] = useState(false);
 
   const _onLoginPressed = () => {
-    props.homeScreen('HomeScreen');
-  /*  const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
 
-    if (emailError || passwordError) {
-      setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
-      return;
-    }
+    console.log("_onLoginPressed...");
+    var callLogin = {
+      method: 'post',
+      url: `${Api.url}/login`,
+      data: {
+        'email': email,
+        'password': password
+      }
+    };
+    console.log("callLogin for " + JSON.stringify(email));
 
-    navigation.navigate('Dashboard');
-  */  
+    axios(callLogin)
+      .then(function(response){
+        console.log("callLogin... \n" + JSON.stringify(response));
+        if (response.status == 200) {
+          setHasLoginError(false);
+          console.log("hasLoginError: " + hasLoginError);
+          Session.token = response.data.token;
+          console.log("Session token is: " + Session.token);
+          props.homeScreen('HomeScreen');
+        } 
+      })
+      .catch(function(error) {
+        setHasLoginError(true);
+        console.log("hasLoginError: " + hasLoginError);
+      })
   };
+
+  let errorWarning = <View></View>
+
+  if (hasLoginError) {
+    errorWarning = <View><Text style={styles.error}>Error en usuario o contraseña</Text></View>
+  }
 
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('HomeScreen')} />
+      <BackButton goBack={() => props.homeScreen('StartScreen')} />
 
       <Logo />
 
@@ -41,7 +67,7 @@ const LoginScreen = ( props ) => {
         label="Email / Usuario"
         returnKeyType="next"
         value={email.value}
-        onChangeText={text => setEmail({ value: text, error: '' })}
+        onChangeText={text => setEmail(text)}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
@@ -54,22 +80,20 @@ const LoginScreen = ( props ) => {
         label="Contraseña"
         returnKeyType="done"
         value={password.value}
-        onChangeText={text => setPassword({ value: text, error: '' })}
+        onChangeText={text => setPassword(text)}
         error={!!password.error}
         errorText={password.error}
         secureTextEntry
       />
 
-      <View style={styles.forgotPassword}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}
-        >
-          <Text style={styles.label}>Olvidaste tu contraseña?</Text>
-        </TouchableOpacity>
-      </View>
+      {errorWarning}
 
       <Button mode="contained" onPress={_onLoginPressed}>
         Iniciar Sesion
+      </Button>
+      
+      <Button style={styles.forgotPassword} mode="contained" onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+        Olvidaste tu contraseña?
       </Button>
 
       <View style={styles.row}>
@@ -83,22 +107,20 @@ const LoginScreen = ( props ) => {
 };
 
 const styles = StyleSheet.create({
-  forgotPassword: {
-    width: '100%',
-    alignItems: 'flex-end',
-    marginBottom: 24,
-  },
   row: {
     flexDirection: 'row',
     marginTop: 4,
   },
   label: {
-    color: theme.colors.secondary,
+    color: '#414757'
   },
   link: {
     fontWeight: 'bold',
-    color: theme.colors.primary,
+    color: '#e61c0e',
   },
+  error: {
+    color: '#ff0033'
+  }
 });
 
 export default memo(LoginScreen);
