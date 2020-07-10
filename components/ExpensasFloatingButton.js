@@ -1,19 +1,19 @@
 import React from 'react';
 import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-const FloatingButton = () => {
+const FloatingButton = (props) => {
 
     return (
         <TouchableOpacity
             activeOpacity={0.7}
-            style={styles.TouchableOpacityStyle}>
+            style={styles.TouchableOpacityStyle}
+            onPress={props.onPress}>
             <Image
                 source={require('../assets/floatingButton.png')}
                 style={styles.FloatingButtonStyle}
             />
         </TouchableOpacity>
     )
-
 }
 
 const styles = StyleSheet.create({

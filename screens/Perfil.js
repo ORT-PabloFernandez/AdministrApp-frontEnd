@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
+import {Restart} from 'fiction-expo-restart';
 
 import Colors from '../constants/colors';
 import Session from '../constants/session';
 
 const Perfil = props => {
+
+    const _onLogoutPressed = () => {
+        Session.user.firstName = null;
+        Session.user.surname = null;
+        Session.user.email = null;
+        Session.user.phone = null;
+        Session.user.username = null;
+        Session.user.cuit = null;
+        Session.user.type = null;
+        Restart();
+    }
 
     return (
         <View style={styles.perfilTitle}>
@@ -16,7 +28,7 @@ const Perfil = props => {
             <Text style={styles.content}>Nombre de usuario: {Session.user.username}</Text>
             <Text style={styles.content}>CUIT: {Session.user.cuit}</Text>
             <Text style={styles.content}>Tipo de usuario: {Session.user.type}</Text>
-            <Button title="Logout" onPress={props.homeScreen('StartScreen')}/>
+            <Button title="Logout" onPress={_onLogoutPressed}/>
         </View>
     );
 };
