@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import LoginScreen from './screens/LogInScreen';
 import StartScreen from './screens/StartScreen';
 import HomeScreen from './screens/HomeScreen';
+import RegisterScreen from './screens/RegisterScreen';
 
 export default function Index() {
 
@@ -17,7 +18,11 @@ export default function Index() {
     setScreenFlag(homeScreenState);
   };
 
-  let content = <StartScreen onLogIn={logInHandler} />;
+  const RegisterScreenHandler = (registerScreenState) => {
+    setScreenFlag(registerScreenState);
+};
+
+  let content = <StartScreen onLogIn={logInHandler} onRegister = {RegisterScreenHandler}/>;
 
   if (screenFlag === 'LoginScreen') {
     content = <LoginScreen homeScreen={HomeScreenHandler} />;
@@ -26,6 +31,10 @@ export default function Index() {
   if (screenFlag === 'HomeScreen') {
     content = <HomeScreen />;
   }
+
+  if (screenFlag === 'RegisterScreen'){
+    content = <RegisterScreen homeScreen = {HomeScreenHandler}/>;
+    }
 
   return (
     <View style={styles.screen}>

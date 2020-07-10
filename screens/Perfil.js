@@ -16,7 +16,6 @@ const Perfil = props => {
             <Text style={styles.content}>Nombre de usuario: {Session.user.username}</Text>
             <Text style={styles.content}>CUIT: {Session.user.cuit}</Text>
             <Text style={styles.content}>Tipo de usuario: {Session.user.type}</Text>
-            <Button title="Logout" onPress={props.homeScreen('StartScreen')}/>
         </View>
     );
 };

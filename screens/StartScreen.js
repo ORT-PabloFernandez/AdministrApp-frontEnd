@@ -13,7 +13,7 @@ const StartScreen = ( props ) => (
     </Button>
     <Button
       mode="outlined"
-      onPress={() => props.navigate('RegisterScreen')}
+      onPress={() => props.onRegister('RegisterScreen')}
     >
       Crear cuenta
     </Button>
