@@ -10,31 +10,31 @@ export default function Index() {
   const [screenFlag, setScreenFlag] = useState('');
 
   const logInHandler = (loginState) => {
-      setScreenFlag(loginState);
+    setScreenFlag(loginState);
   };
 
   const HomeScreenHandler = (homeScreenState) => {
     setScreenFlag(homeScreenState);
-};
+  };
 
-  let content = <StartScreen onLogIn = {logInHandler} />;
+  let content = <StartScreen onLogIn={logInHandler} />;
 
-  if (screenFlag === 'LoginScreen'){
-    content = <LoginScreen homeScreen = {HomeScreenHandler}/>;
-    }
-  
-  if (screenFlag === 'HomeScreen'){
+  if (screenFlag === 'LoginScreen') {
+    content = <LoginScreen homeScreen={HomeScreenHandler} />;
+  }
+
+  if (screenFlag === 'HomeScreen') {
     content = <HomeScreen />;
   }
 
-  return(
+  return (
     <View style={styles.screen}>
       {content}
     </View>
-  ) 
+  )
 };
 
-const styles=StyleSheet.create({
+const styles = StyleSheet.create({
   screen: {
     flex: 1
   }
