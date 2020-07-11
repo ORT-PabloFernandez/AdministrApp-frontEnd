@@ -101,16 +101,6 @@ const LoginScreen = (props) => {
         Iniciar Sesion
       </Button>
 
-      <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-        <Text style={styles.link}>Olvidaste tu contraseña?</Text>
-      </TouchableOpacity>
-
-      <View style={styles.row}>
-        <Text style={styles.label}>No tenes cuenta? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-          <Text style={styles.link}>Registrate</Text>
-        </TouchableOpacity>
-      </View>
     </Background>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
 
-import Card from '../components/Card';
+import ExpensasCard from '../components/ExpensasCard';
 import Colors from '../constants/colors';
 
 import Api from '../constants/api';
@@ -28,18 +28,12 @@ const Avisos = (props) => {
             console.log("Response: \n" + JSON.stringify(response));
             const items = response.data.mensajes.map((item) => {
                 console.log("Item: " + JSON.stringify(item));
-                return (
-                    <Card style={styles.avisosContainer}>
-                        <Text style={styles.avisosText}>
-                            {item.descripcion}
-                        </Text>
-                    </Card>
-                );
+                return item;
             })
-            console.log("Items: " + JSON.stringify(items));
             if (mensajes.length == 0) {
                 setMensajes(items);
             }
+            console.log("Mensajes: \n " + JSON.stringify(mensajes));
         })
         .catch(function (error) {
             console.log("An error ocurred \n");
@@ -48,7 +42,16 @@ const Avisos = (props) => {
 
     return (
         <View style={styles.screen}>
-            {mensajes}
+            <FlatList
+                keyExtractor={(item, index) => item._id}
+                data={mensajes}
+                renderItem={(itemData) =>
+                    <ExpensasCard
+                        key={itemData.item._id}
+                        id={itemData.item._id}
+                        title={itemData.item.titulo}
+                    />}
+            />
         </View>
     )
 };
@@ -58,7 +61,8 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.mainBackground,
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingTop: 100
     },
     avisosContainer: {
         flexDirection: 'row',
