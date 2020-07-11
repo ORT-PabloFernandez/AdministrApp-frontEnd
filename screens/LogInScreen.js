@@ -23,7 +23,7 @@ const LoginScreen = (props) => {
     console.log("_onLoginPressed...");
     var callLogin = {
       method: 'post',
-      url: `${Api.url}/login`,
+      url: `${Api.url}/users/login`,
       data: {
         'email': email,
         'password': password
@@ -32,17 +32,26 @@ const LoginScreen = (props) => {
     console.log("callLogin for " + JSON.stringify(email));
 
     axios(callLogin)
-      .then(function(response){
+      .then(function (response) {
         console.log("callLogin... \n" + JSON.stringify(response));
         if (response.status == 200) {
+          console.log("Server response: \n" + JSON.stringify(response));
+          Session.user.firstName = response.data.nombre;
+          Session.user.surname = response.data.apellido;
+          Session.user.email = response.data.email;
+          Session.user.phone = response.data.telefono;
+          Session.user.username = response.data.nombreUsuario;
+          Session.user.cuit = response.data.cuit;
+          Session.user.type = response.data.tipo;
+          console.log("Session user: \n" + JSON.stringify(Session.user));
           setHasLoginError(false);
           console.log("hasLoginError: " + hasLoginError);
           Session.token = response.data.token;
           console.log("Session token is: " + Session.token);
           props.homeScreen('HomeScreen');
-        } 
+        }
       })
-      .catch(function(error) {
+      .catch(function (error) {
         setHasLoginError(true);
         console.log("hasLoginError: " + hasLoginError);
       })
@@ -91,10 +100,10 @@ const LoginScreen = (props) => {
       <Button mode="contained" onPress={_onLoginPressed}>
         Iniciar Sesion
       </Button>
-      
-      <Button style={styles.forgotPassword} mode="contained" onPress={() => navigation.navigate('ForgotPasswordScreen')}>
-        Olvidaste tu contraseña?
-      </Button>
+
+      <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+        <Text style={styles.link}>Olvidaste tu contraseña?</Text>
+      </TouchableOpacity>
 
       <View style={styles.row}>
         <Text style={styles.label}>No tenes cuenta? </Text>

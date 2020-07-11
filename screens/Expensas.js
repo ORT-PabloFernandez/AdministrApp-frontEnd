@@ -1,24 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
 import Card from '../components/Card';
+import FloatingButton from '../components/ExpensasFloatingButton';
+import ExpensasInput from '../components/ExpensasInput';
 import Colors from '../constants/colors';
+import Session from '../constants/session';
 
 const Expensas = props => {
+
+    const [userLogged, setUserLogged] = useState(Session.user.type);
+    const [isAddMode, setIsAddMode] = useState(false);
+
+    let deleteButton = <Button title="Borrar" color="#FF0000" />
+
+    let floatingButton = <FloatingButton onPress={() => setIsAddMode(true)} />
+
+    const addExpensaHandler = (expensa) => {
+        // logica para agregar nueva expensa
+        setIsAddMode(false);
+    };
+
+    const cancelExpensaAdditionHandler = () => {
+        setIsAddMode(false);
+    };
+
+    if (userLogged != 'administracion') {
+        deleteButton = <View></View>
+        floatingButton = <View></View>
+    }
+
     return (
         <View style={styles.expensasTitle}>
+            {floatingButton}
+            <ExpensasInput
+                visible={isAddMode}
+                onAddExpensa={addExpensaHandler}
+                onCancel={cancelExpensaAdditionHandler}
+            />
             <View>
                 <Card style={styles.expensasContainer}>
-                    <Text style={styles.expensasText}>Enero 2020</Text>
+                    <Text style={styles.expensasText}>Ene 2020</Text>
                     <Button title="Detalle" />
+                    {deleteButton}
                 </Card>
                 <Card style={styles.expensasContainer}>
-                    <Text style={styles.expensasText}>Febrero 2020</Text>
+                    <Text style={styles.expensasText}>Feb 2020</Text>
                     <Button title="Detalle" />
+                    {deleteButton}
                 </Card>
                 <Card style={styles.expensasContainer}>
-                    <Text style={styles.expensasText}>Marzo 2020</Text>
+                    <Text style={styles.expensasText}>Mar 2020</Text>
                     <Button title="Detalle" />
+                    {deleteButton}
                 </Card>
             </View>
         </View>
