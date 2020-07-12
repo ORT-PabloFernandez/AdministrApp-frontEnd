@@ -4,6 +4,8 @@ import { View, StyleSheet, Text, Button } from 'react-native';
 import Api from '../constants/api';
 import Session from '../constants/session';
 
+import ExpensasDetail from '../components/ExpensasDetail';
+
 const axios = require('axios');
 
 
@@ -12,6 +14,15 @@ const axios = require('axios');
 const ExpensasCard = props => {
 
     const [userLogged, setUserLogged] = useState(Session.user.type);
+    const [isDetailMode, setIsDetailMode] = useState(false);
+
+    const detalleExpensaHandler = (id) => {
+        setIsDetailMode(true);
+    }
+
+    const cancelExpensaDetailHandler = () => {
+        setIsDetailMode(false);
+    }
 
     const deleteExpensaHandler = (id) => {
         console.log(new Date() + " Expensa id: " + id);
@@ -43,11 +54,16 @@ const ExpensasCard = props => {
 
     return (
         <View style={{ ...styles.card, ...props.style }}>
+            <ExpensasDetail
+                visible={isDetailMode}
+                onCancel={cancelExpensaDetailHandler}
+                detailId={props.id}
+            />
             {props.children}
             <View style={styles.textContainer} >
                 <Text style={styles.textStyle} >{props.title}</Text>
             </View>
-            <Button title="Detalle" />
+            <Button title="Detalle" onPress={detalleExpensaHandler}/>
             {deleteButton}
         </View>
     )

@@ -13,6 +13,7 @@ const axios = require('axios');
 const Departamentos = (props) => {
 
     const [departamentos, setDepartamentos] = useState([]);
+    const [userLogged, setUserLogged] = useState(Session.user.type);
     const [isAddMode, setIsAddMode] = useState(false);
 
     var getDepartamentos = {
@@ -43,6 +44,10 @@ const Departamentos = (props) => {
 
     // floating button solo para administradores
     let floatingButton = <FloatingButton onPress={() => setIsAddMode(true)} />
+
+    if (userLogged != 'administracion') {
+        floatingButton = <View></View>
+    }
 
     return (
     <View style={styles.expensasTitle}> 
@@ -94,45 +99,3 @@ const styles = StyleSheet.create({
 })
 
 export default Departamentos;
-
-/*
-const Departamentos = props => {
-    return (
-        <View style={styles.departamentosTitle}>
-            <Card style={styles.departamentoContainer}>
-                <Text>Planta Baja "A"</Text>
-                <Button title="Detalle" />
-            </Card>
-            <Card style={styles.departamentoContainer}>
-                <Text>Planta Baja "B"</Text>
-                <Button title="Detalle" />
-            </Card>
-            <Card style={styles.departamentoContainer}>
-                <Text>Primer Piso "A"</Text>
-                <Button title="Detalle" />
-            </Card>
-        </View>
-    );
-};
-
-
-const styles = StyleSheet.create({
-    departamentosTitle: {
-        backgroundColor: Colors.mainBackground,
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    departamentoContainer: {
-        flexDirection: 'row',
-        margin: 20,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        maxWidth: '80%',
-        width: 300,
-        height: 150
-    }
-});
-
-export default Departamentos;
-*/
