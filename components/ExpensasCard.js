@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Button } from 'react-native';
 
+import Api from '../constants/api';
 import Session from '../constants/session';
 
-const keyGenerator = require('../core/keyGenerator');
+const axios = require('axios');
+
 
 // props.style es una prop definida para el componente card, no es el style que tienen
 // todos los componentes de react-native por defecto
@@ -11,7 +13,29 @@ const ExpensasCard = props => {
 
     const [userLogged, setUserLogged] = useState(Session.user.type);
 
-    let deleteButton = <Button title="Borrar" color="#FF0000" />
+    const deleteExpensaHandler = (id) => {
+        console.log(new Date() + " Expensa id: " + id);
+        // request para deleteExpensa
+        var deleteExpensa = {
+            method: 'delete',
+            url: `${Api.url}/expensa/${id}`,
+            headers: {
+                'Authorization': `${Session.bearer}${Session.token}`
+            }
+        };
+
+        axios(deleteExpensa)
+            .then(function (response) {
+                console.log(new Date() + " Calling props.onExpensaDelete... \n");
+                props.onExpensaDelete();
+            })
+            .catch(function (error) {
+                console.log(new Date() + " An error ocurred \n");
+                console.log(error);
+            })
+    };
+
+    let deleteButton = <Button title="Borrar" color="#FF0000" onPress={deleteExpensaHandler.bind(this, props.id)} />
 
     if (userLogged != 'administracion') {
         deleteButton = null;

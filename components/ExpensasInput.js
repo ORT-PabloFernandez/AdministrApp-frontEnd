@@ -77,6 +77,7 @@ const ExpensasInput = (props) => {
                         style={styles.input}
                         onChangeText={montoInputHandler}
                         value={enteredMonto}
+                        keyboardType='number-pad'
                     />
                     <TextInput
                         multiline={true}
