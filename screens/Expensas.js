@@ -16,8 +16,7 @@ const Expensas = props => {
 
     let floatingButton = <FloatingButton onPress={() => setIsAddMode(true)} />
 
-    const addExpensaHandler = (expensa) => {
-        // logica para agregar nueva expensa
+    const addExpensaHandler = () => {
         setIsAddMode(false);
     };
 
