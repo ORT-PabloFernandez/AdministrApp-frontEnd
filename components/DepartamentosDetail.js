@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-    Text, View, TextInput, Button, StyleSheet, Modal, TouchableWithoutFeedback, Keyboard
+    Text, View,Button, StyleSheet, Modal
 } from 'react-native';
 
 import Api from '../constants/api';
@@ -8,28 +8,28 @@ import Session from '../constants/session';
 
 const axios = require('axios');
 
-const ExpensasDetail = (props) => {
+const DepartamentosDetail = (props) => {
 
-    const [expensa, setExpensa] = useState();
+    const [departamento, setDepartamento] = useState();
 
     console.log(new Date() + " props.onDetail id " + props.detailId);
 
-    var getExpensa = {
+    var getDepartamento = {
         method: 'get',
-        url: `${Api.url}/expensa/${props.detailId}`,
+        url: `${Api.url}/departamento/${props.detailId}`,
         headers: {
             'Authorization': `${Session.bearer}${Session.token}`
         }
     };
 
-    console.log(new Date() + " Request is: \n" + JSON.stringify(getExpensa));
+    console.log(new Date() + " Request is: \n" + JSON.stringify(getDepartamento));
 
-    axios(getExpensa)
+    axios(getDepartamento)
         .then(function (response) {
             console.log(new Date() + " Response: \n" + JSON.stringify(response));
-            console.log(new Date() + " expensa is " + JSON.stringify(expensa));
-            if (!expensa) {
-                setExpensa(response.data.expensa);
+            console.log(new Date() + " departamento is " + JSON.stringify(departamento));
+            if (!departamento) {
+                setDepartamento(response.data.departamento);
             }
         })
         .catch(function (error) {
@@ -37,24 +37,20 @@ const ExpensasDetail = (props) => {
             console.log(error);
         })
 
-    let content = null;
+    let content = null; 
 
-    if (expensa) {
+    if (departamento) {
         content = <View>
-            <View>
-                <Text style={styles.titulo}>{expensa.titulo}</Text>
-                <Text style={styles.monto}>Total: $ {expensa.monto.$numberDecimal}</Text>
-                <Text style={styles.descripcion}>Detalle:</Text>
-                <Text style={styles.descripcion}>{expensa.descripcion}</Text>
-            </View>
+            <Text>Titulo {departamento.titulo}</Text>
+            <Text>Descripcion {departamento.descripcion}</Text>
         </View>
     }
 
     return (
         <Modal visible={props.visible} animationType="slide">
             <View style={styles.inputContainer}>
-                <View style={styles.extractoWrapper}>
-                    <Text style={styles.extractoText}>Detalle del Extracto</Text>
+                <View style={styles.nuevoExtractoWrapper}>
+                    <Text style={styles.nuevoExtractoText}>Detalle del Departamento</Text>
                     {content}
                 </View>
                 <View style={styles.button}>
@@ -99,40 +95,14 @@ const styles = StyleSheet.create({
     button: {
         width: '45%'
     },
-    extractoWrapper: {
+    nuevoExtractoWrapper: {
         margin: 20
     },
-    extractoText: {
+    nuevoExtractoText: {
         color: 'red',
         fontWeight: 'bold',
-        fontSize: 20,
-        textAlign: 'center'
-    },
-    titulo: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#FF5632',
-        marginVertical: 20,
-        textAlign: 'center',
-        borderColor: '#FF5632',
-        borderWidth: 2
-    },
-    monto: {
-        fontSize: 15,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        textAlign: 'center',
-        borderColor: 'black',
-        borderWidth: 1
-    },
-    descripcion: {
-        fontSize: 15,
-        fontWeight: 'bold',
-        marginVertical: 10,
-        textAlign: 'center',
-        borderColor: 'black',
-        borderWidth: 1
+        fontSize: 20
     }
 });
 
-export default ExpensasDetail;
+export default DepartamentosDetail;

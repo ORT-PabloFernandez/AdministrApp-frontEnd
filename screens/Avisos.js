@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
 
-import ExpensasCard from '../components/ExpensasCard';
+import AvisosCard from '../components/AvisosCard';
+import AvisosInput from '../components/AvisosInput';
+import FloatingButton from '../components/FloatingButton';
 import Colors from '../constants/colors';
 
 import Api from '../constants/api';
@@ -12,6 +14,8 @@ const axios = require('axios');
 const Avisos = (props) => {
 
     const [mensajes, setMensajes] = useState([]);
+    const [userLogged, setUserLogged] = useState(Session.user.type);
+    const [isAddMode, setIsAddMode] = useState(false);
 
     var getMensajes = {
         method: 'get',
@@ -40,18 +44,95 @@ const Avisos = (props) => {
             console.log(error);
         })
 
+    // floating button solo para administradores
+    let floatingButton = <FloatingButton onPress={() => setIsAddMode(true)} />
+
+    const addAvisoHandler = () => {
+        console.log(new Date() + " addAvisoHandler called...\n");
+        
+        var getAvisos = {
+            method: 'get',
+            url: `${Api.url}/mensajes`,
+            headers: {
+                'Authorization': `${Session.bearer}${Session.token}`
+            }
+        };
+    
+        console.log(new Date() + " Request is: \n" + JSON.stringify(getAvisos));
+        
+        axios(getAvisos)
+        .then(function (response) {
+            console.log(new Date() + " Response: \n" + JSON.stringify(response));
+            const items = response.data.mensajes.map((item) => {
+                console.log(new Date() + "Item: " + JSON.stringify(item));
+                return item;
+            })
+            setMensajes(items);
+            console.log(new Date() + " Avisos: \n " + JSON.stringify(mensajes));
+        })
+        .catch(function (error) {
+            console.log(new Date() + " An error ocurred \n");
+            console.log(error);
+        })
+        setIsAddMode(false);
+    };
+
+    const avisosDeleteHandler = () => {
+        console.log(new Date() + " avisosDeleteHandler called...\n");
+        
+        var getAvisos = {
+            method: 'get',
+            url: `${Api.url}/mensajes`,
+            headers: {
+                'Authorization': `${Session.bearer}${Session.token}`
+            }
+        };
+    
+        console.log(new Date() + " Request is: \n" + JSON.stringify(getAvisos));
+        
+        axios(getAvisos)
+        .then(function (response) {
+            console.log(new Date() + " Response: \n" + JSON.stringify(response));
+            const items = response.data.mensajes.map((item) => {
+                console.log(new Date() + "Item: " + JSON.stringify(item));
+                return item;
+            })
+            setMensajes(items);
+            console.log(new Date() + " Avisos: \n " + JSON.stringify(mensajes));
+        })
+        .catch(function (error) {
+            console.log(new Date() + " An error ocurred \n");
+            console.log(error);
+        })
+    };
+
+    const cancelAvisoAdditionHandler = () => {
+        setIsAddMode(false);
+    };
+
+    if (userLogged != 'administracion') {
+        floatingButton = <View></View>
+    }
+
     return (
         <View style={styles.screen}>
+            <AvisosInput
+                visible={isAddMode}
+                onAddAviso={addAvisoHandler}
+                onCancel={cancelAvisoAdditionHandler}
+            />
             <FlatList
                 keyExtractor={(item, index) => item._id}
                 data={mensajes}
                 renderItem={(itemData) =>
-                    <ExpensasCard
+                    <AvisosCard
                         key={itemData.item._id}
                         id={itemData.item._id}
                         title={itemData.item.titulo}
+                        onAvisoDelete={avisosDeleteHandler}
                     />}
             />
+            {floatingButton}
         </View>
     )
 };

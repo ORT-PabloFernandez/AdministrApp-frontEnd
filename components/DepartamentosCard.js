@@ -4,41 +4,41 @@ import { View, StyleSheet, Text, Button } from 'react-native';
 import Api from '../constants/api';
 import Session from '../constants/session';
 
-import ExpensasDetail from '../components/ExpensasDetail';
+import DepartamentosDetail from '../components/DepartamentosDetail';
 
 const axios = require('axios');
 
 
 // props.style es una prop definida para el componente card, no es el style que tienen
 // todos los componentes de react-native por defecto
-const ExpensasCard = props => {
+const DepartamentosCard = props => {
 
     const [userLogged, setUserLogged] = useState(Session.user.type);
     const [isDetailMode, setIsDetailMode] = useState(false);
 
-    const detalleExpensaHandler = (id) => {
+    const detalleDepartamentoHandler = (id) => {
         setIsDetailMode(true);
     }
 
-    const cancelExpensaDetailHandler = () => {
+    const cancelDepartamentoDetailHandler = () => {
         setIsDetailMode(false);
     }
 
-    const deleteExpensaHandler = (id) => {
-        console.log(new Date() + " Expensa id: " + id);
-        // request para deleteExpensa
-        var deleteExpensa = {
+    const deleteDepartamentoHandler = (id) => {
+        console.log(new Date() + " Departamento id: " + id);
+        // request para deleteDepartamento
+        var deleteDepartamento = {
             method: 'delete',
-            url: `${Api.url}/expensa/${id}`,
+            url: `${Api.url}/departamento/${id}`,
             headers: {
                 'Authorization': `${Session.bearer}${Session.token}`
             }
         };
 
-        axios(deleteExpensa)
+        axios(deleteDepartamento)
             .then(function (response) {
-                console.log(new Date() + " Calling props.onExpensaDelete... \n");
-                props.onExpensaDelete();
+                console.log(new Date() + " Calling props.onDepartamentoDelete... \n");
+                props.onDepartamentoDelete();
             })
             .catch(function (error) {
                 console.log(new Date() + " An error ocurred \n");
@@ -46,7 +46,7 @@ const ExpensasCard = props => {
             })
     };
 
-    let deleteButton = <Button title="Borrar" color="#FF0000" onPress={deleteExpensaHandler.bind(this, props.id)} />
+    let deleteButton = <Button title="Borrar" color="#FF0000" onPress={deleteDepartamentoHandler.bind(this, props.id)} />
 
     if (userLogged != 'administracion') {
         deleteButton = null;
@@ -54,9 +54,9 @@ const ExpensasCard = props => {
 
     return (
         <View style={{ ...styles.card, ...props.style }}>
-            <ExpensasDetail
+            <DepartamentosDetail
                 visible={isDetailMode}
-                onCancel={cancelExpensaDetailHandler}
+                onCancel={cancelDepartamentoDetailHandler}
                 detailId={props.id}
             />
             {props.children}
@@ -64,7 +64,7 @@ const ExpensasCard = props => {
                 <Text style={styles.textStyle} >{props.title}</Text>
             </View>
             <View style={styles.buttonMargin}>
-                <Button title="Detalle" onPress={detalleExpensaHandler} />
+                <Button title="Detalle" onPress={detalleDepartamentoHandler} />
             </View>
             <View>
                 {deleteButton}
@@ -103,5 +103,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ExpensasCard;
+export default DepartamentosCard;
 

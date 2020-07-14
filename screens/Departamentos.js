@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
 
 import FloatingButton from '../components/FloatingButton';
-import ExpensasCard from '../components/ExpensasCard';
+import DepartamentosCard from '../components/DepartamentosCard';
+import DepartamentosInput from '../components/DepartamentosInput';
 import Colors from '../constants/colors';
 
 import Api from '../constants/api';
@@ -45,26 +46,95 @@ const Departamentos = (props) => {
     // floating button solo para administradores
     let floatingButton = <FloatingButton onPress={() => setIsAddMode(true)} />
 
+    const addDepartamentoHandler = () => {
+        console.log(new Date() + " addDepartamentoHandler called...\n");
+
+        var getDepartamentos = {
+            method: 'get',
+            url: `${Api.url}/departamentos`,
+            headers: {
+                'Authorization': `${Session.bearer}${Session.token}`
+            }
+        };
+
+        console.log(new Date() + " Request is: \n" + JSON.stringify(getDepartamentos));
+
+        axios(getDepartamentos)
+            .then(function (response) {
+                console.log(new Date() + " Response: \n" + JSON.stringify(response));
+                const items = response.data.departamentos.map((item) => {
+                    console.log(new Date() + "Item: " + JSON.stringify(item));
+                    return item;
+                })
+                setDepartamentos(items);
+                console.log(new Date() + " Avisos: \n " + JSON.stringify(departamentos));
+            })
+            .catch(function (error) {
+                console.log(new Date() + " An error ocurred \n");
+                console.log(error);
+            })
+        setIsAddMode(false);
+    };
+
+    const departamentosDeleteHandler = () => {
+        console.log(new Date() + " departamentosDeleteHandler called...\n");
+
+        var getDepartamentos = {
+            method: 'get',
+            url: `${Api.url}/departamentos`,
+            headers: {
+                'Authorization': `${Session.bearer}${Session.token}`
+            }
+        };
+
+        console.log(new Date() + " Request is: \n" + JSON.stringify(getDepartamentos));
+
+        axios(getDepartamentos)
+            .then(function (response) {
+                console.log(new Date() + " Response: \n" + JSON.stringify(response));
+                const items = response.data.departamentos.map((item) => {
+                    console.log(new Date() + "Item: " + JSON.stringify(item));
+                    return item;
+                })
+                setDepartamentos(items);
+                console.log(new Date() + " Avisos: \n " + JSON.stringify(departamentos));
+            })
+            .catch(function (error) {
+                console.log(new Date() + " An error ocurred \n");
+                console.log(error);
+            })
+    };
+
+    const cancelDepartamentoAdditionHandler = () => {
+        setIsAddMode(false);
+    };
+
     if (userLogged != 'administracion') {
         floatingButton = <View></View>
     }
 
     return (
-    <View style={styles.expensasTitle}> 
-        <View style={styles.screen}>
-            <FlatList
-                keyExtractor={(item, index) => item._id}
-                data={departamentos}
-                renderItem={(itemData) =>
-                    <ExpensasCard
-                        key={itemData.item._id}
-                        id={itemData.item._id}
-                        title={itemData.item.titulo}
-                    />}
-            />
+        <View style={styles.expensasTitle}>
+            <View style={styles.screen}>
+                <DepartamentosInput
+                    visible={isAddMode}
+                    onAddDepartamento={addDepartamentoHandler}
+                    onCancel={cancelDepartamentoAdditionHandler}
+                />
+                <FlatList
+                    keyExtractor={(item, index) => item._id}
+                    data={departamentos}
+                    renderItem={(itemData) =>
+                        <DepartamentosCard
+                            key={itemData.item._id}
+                            id={itemData.item._id}
+                            title={itemData.item.titulo}
+                            onDepartamentoDelete={departamentosDeleteHandler}
+                        />}
+                />
+            </View>
+            {floatingButton}
         </View>
-        {floatingButton}
-    </View>
     )
 };
 
@@ -93,9 +163,8 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.mainBackground,
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop:100
-    },
+        alignItems: 'center'
+    }
 })
 
 export default Departamentos;
