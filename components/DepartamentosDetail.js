@@ -41,8 +41,11 @@ const DepartamentosDetail = (props) => {
 
     if (departamento) {
         content = <View>
-            <Text>Titulo {departamento.titulo}</Text>
-            <Text>Descripcion {departamento.descripcion}</Text>
+            <View>
+                <Text style={styles.titulo}>{departamento.titulo}</Text>
+                <Text style={styles.descripcion}>Detalle:</Text>
+                <Text style={styles.descripcion}>{departamento.descripcion}</Text>
+            </View>
         </View>
     }
 
@@ -102,6 +105,23 @@ const styles = StyleSheet.create({
         color: 'red',
         fontWeight: 'bold',
         fontSize: 20
+    },
+    titulo: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#FF5632',
+        marginVertical: 20,
+        textAlign: 'center',
+        borderColor: '#FF5632',
+        borderWidth: 2
+    },
+    descripcion: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        marginVertical: 10,
+        textAlign: 'center',
+        borderColor: 'black',
+        borderWidth: 1
     }
 });
 
