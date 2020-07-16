@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,6 +13,7 @@ import Background from '../components/Background';
 const Tab = createBottomTabNavigator();
 
 const HomeScreen = props => { 
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -39,10 +40,10 @@ const HomeScreen = props => {
           inactiveTintColor: 'gray',
         }}
       >
-        <Tab.Screen name="Expensas" component={Expensas} />
-        <Tab.Screen name="Avisos" component={Avisos} />
-        <Tab.Screen name="Departamentos" component={Departamentos} />
-        <Tab.Screen name="Perfil" component={Perfil} />
+        <Tab.Screen name="Expensas" children={()=><Expensas />} />
+        <Tab.Screen name="Avisos" children={()=><Avisos />} />
+        <Tab.Screen name="Departamentos" children={()=><Departamentos />} />
+        <Tab.Screen name="Perfil" children={()=><Perfil />} />
       </Tab.Navigator>
     </NavigationContainer>
   );

@@ -64,54 +64,46 @@ const LoginScreen = (props) => {
   }
 
   return (
+
     <Background>
-      <BackButton goBack={() => props.homeScreen('StartScreen')} />
 
-      <Logo />
+        <BackButton goBack={() => props.homeScreen('StartScreen')} />
+        <Logo />
 
-      <Header>Bienvenido!</Header>
-      <Text style={styles.label}>Ingresa tu usuario y contraseña</Text>
+        <Header>Bienvenido!</Header>
+        <Text style={styles.label}>Ingresa tu usuario y contraseña</Text>
 
-      <TextInput
-        label="Email / Usuario"
-        returnKeyType="next"
-        value={email.value}
-        onChangeText={text => setEmail(text)}
-        error={!!email.error}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-      />
+        <TextInput
+          label="Email / Usuario"
+          returnKeyType="next"
+          value={email.value}
+          onChangeText={text => setEmail(text)}
+          error={!!email.error}
+          errorText={email.error}
+          autoCapitalize="none"
+          autoCompleteType="email"
+          textContentType="emailAddress"
+          keyboardType="email-address"
+        />
 
-      <TextInput
-        label="Contraseña"
-        returnKeyType="done"
-        value={password.value}
-        onChangeText={text => setPassword(text)}
-        error={!!password.error}
-        errorText={password.error}
-        secureTextEntry
-      />
+        <TextInput
+          label="Contraseña"
+          returnKeyType="done"
+          value={password.value}
+          onChangeText={text => setPassword(text)}
+          error={!!password.error}
+          errorText={password.error}
+          secureTextEntry
+        />
 
-      {errorWarning}
+        {errorWarning}
 
-      <Button mode="contained" onPress={_onLoginPressed}>
-        Iniciar Sesion
-      </Button>
+        <Button mode="contained" onPress={_onLoginPressed}>
+          Iniciar Sesion
+        </Button>
 
-      <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-        <Text style={styles.link}>Olvidaste tu contraseña?</Text>
-      </TouchableOpacity>
+    </Background >
 
-      <View style={styles.row}>
-        <Text style={styles.label}>No tenes cuenta? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-          <Text style={styles.link}>Registrate</Text>
-        </TouchableOpacity>
-      </View>
-    </Background>
   );
 };
 

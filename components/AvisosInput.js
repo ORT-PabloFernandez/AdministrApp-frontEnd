@@ -9,43 +9,42 @@ import Session from '../constants/session';
 const axios = require('axios');
 const utils = require('../core/utils');
 
-const ExpensasInput = (props) => {
+const AvisosInput = (props) => {
 
     const [enteredTitulo, setEnteredTitulo] = useState('');
-    const [enteredMonto, setEnteredMonto] = useState('');
     const [enteredDescripcion, setEnteredDescripcion] = useState('');
     const [dataIsOk, setDataIsOk] = useState();
 
     console.log(new Date() + " dataIsOk is: " + dataIsOk);
 
     if (dataIsOk) {
-        var callAddExpensa = {
+        var callAddAviso = {
             method: 'post',
-            url: `${Api.url}/expensa`,
+            url: `${Api.url}/mensaje`,
             headers: {
                 'Authorization': `${Session.bearer}${Session.token}`
             },
             data: {
                 'titulo': enteredTitulo,
-                'monto': enteredMonto,
                 'descripcion': enteredDescripcion,
-                'usuarios': 'all'
+                'usuarios': 'all',
+                'urgente': false,
+                'tipo': 'aviso'
             }
         };
-        console.log("callAddExpensa with data: " + JSON.stringify(callAddExpensa.data));
+        console.log(new Date() + "callAddAviso with data: " + JSON.stringify(callAddAviso.data));
 
-        axios(callAddExpensa)
+        axios(callAddAviso)
             .then(function (response) {
-                console.log("callAddExpensa... \n" + JSON.stringify(response));
+                console.log(new Date() + "callAddAviso... \n" + JSON.stringify(response));
                 if (response.status == 200) {
                     setEnteredTitulo('');
-                    setEnteredMonto('');
                     setEnteredDescripcion('');
-                    props.onAddExpensa();
+                    props.onAddAviso();
                 }
             })
             .catch(function (error) {
-                console.log("Error: \n" + error);
+                console.log(new Date() + "Error: \n" + error);
             })
     }
 
@@ -53,21 +52,15 @@ const ExpensasInput = (props) => {
         setEnteredTitulo(text);
     };
 
-    const montoInputHandler = (text) => {
-        setEnteredMonto(text);
-    };
-
     const descripcionInputHandler = (text) => {
         setEnteredDescripcion(text);
     };
 
-    const addExpensaHandler = () => {
-
+    const addAvisoHandler = () => {
         console.log(new Date + " addExpensaHandler...");
 
         if (
             utils.tituloValidator(enteredTitulo) != '' ||
-            utils.montoValidator(enteredMonto) != '' ||
             utils.descripcionValidator(enteredDescripcion) != ''
         ) {
             console.log(new Date() + " user data has errors!");
@@ -78,26 +71,21 @@ const ExpensasInput = (props) => {
         }
 
         console.log(new Date() + " tituloValidator " + utils.tituloValidator(enteredTitulo));
-        console.log(new Date() + " montoValidator " + utils.montoValidator(enteredMonto));
         console.log(new Date() + " descripcionValidator " + utils.descripcionValidator(enteredDescripcion));
-
     };
 
     const cancelExpensaHandler = () => {
         props.onCancel();
         setDataIsOk();
         setEnteredTitulo('');
-        setEnteredMonto('');
         setEnteredDescripcion('');
     };
 
     let tituloErrorWarning = <View></View>
-    let montoErrorWarning = <View></View>
     let descripcionErrorWarning = <View></View>
 
     if (dataIsOk == false) {
         tituloErrorWarning = <View style={styles.errorWrapper}><Text style={styles.error}>{utils.tituloValidator(enteredTitulo)}</Text></View>
-        montoErrorWarning = <View style={styles.errorWrapper}><Text style={styles.error}>{utils.montoValidator(enteredMonto)}</Text></View>
         descripcionErrorWarning = <View style={styles.errorWrapper}><Text style={styles.error}>{utils.descripcionValidator(enteredDescripcion)}</Text></View>
     }
 
@@ -108,7 +96,7 @@ const ExpensasInput = (props) => {
             }}>
                 <View style={styles.inputContainer}>
                     <View style={styles.nuevoExtractoWrapper}>
-                        <Text style={styles.nuevoExtractoText}>Nuevo extracto</Text>
+                        <Text style={styles.nuevoExtractoText}>Nuevo aviso</Text>
                     </View>
                     <TextInput
                         placeholder="Titulo"
@@ -117,14 +105,6 @@ const ExpensasInput = (props) => {
                         value={enteredTitulo}
                     />
                     {tituloErrorWarning}
-                    <TextInput
-                        placeholder="Monto"
-                        style={styles.input}
-                        onChangeText={montoInputHandler}
-                        value={enteredMonto}
-                        keyboardType='number-pad'
-                    />
-                    {montoErrorWarning}
                     <TextInput
                         multiline={true}
                         placeholder="Descripcion"
@@ -138,7 +118,7 @@ const ExpensasInput = (props) => {
                             <Button title="Cancelar" color="red" onPress={cancelExpensaHandler} />
                         </View>
                         <View style={styles.button}>
-                            <Button title="Agregar" onPress={addExpensaHandler} />
+                            <Button title="Agregar" onPress={addAvisoHandler} />
                         </View>
                     </View>
                 </View>
@@ -198,4 +178,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ExpensasInput;
+export default AvisosInput;
